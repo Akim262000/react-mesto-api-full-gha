@@ -1,0 +1,14 @@
+.auth__login-hint {
+  margin: 15px 0 0;
+  padding: 0;
+  display: block;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+}
+
+.auth__login-hint:hover {
+  opacity: 0.8;
+  transition: 1s linear;
+}

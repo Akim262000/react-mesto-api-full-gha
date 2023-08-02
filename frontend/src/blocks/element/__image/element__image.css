@@ -1,0 +1,14 @@
+.element__image {
+  width: 282px;
+  height: 282px;
+  border-radius: 10px 10px 0 0;
+  display: block;
+  object-fit: cover;
+}
+
+@media (max-width: 630px) and (min-width: 491px) {
+  .element__image {
+    width: 210px;
+    height: 210px;
+  }
+}
