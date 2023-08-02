@@ -1,0 +1,9 @@
+const ERROR_OK = 200;
+const ERROR_CREATE = 201;
+const ERROR_INTERNAL_SERVER = 500;
+
+module.exports = {
+  ERROR_OK,
+  ERROR_CREATE,
+  ERROR_INTERNAL_SERVER,
+};
