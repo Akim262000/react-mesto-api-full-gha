@@ -1,4 +1,4 @@
-export const base_url = 'https://auth.nomoreparties.co';
+export const base_url = 'https://api.mesto.nomoreparties.co';
 
 const checkResponse = (response) => {
   return response.ok
