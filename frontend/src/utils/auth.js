@@ -1,12 +1,4 @@
-export const base_url = 'https://api.mesto.nomoreparties.co';
-
-const checkResponse = (response) => {
-  return response.ok
-    ? response.json()
-    : Promise.reject(
-        new Error(`Ошибка ${response.status}: ${response.statusText}`)
-      );
-};
+import { checkResponse, base_url } from './utils';
 
 const headers = {
   Accept: 'application/json',

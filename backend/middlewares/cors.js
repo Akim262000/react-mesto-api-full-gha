@@ -1,7 +1,8 @@
 const allowedCors = [
   'http://akim.nomoreparties.co',
   'https://akim.nomoreparties.co',
-  'localhost:3000'
+  'http://localhost:3000',
+  'https://localhost:3000',
 ]
 
 const DEFAULT_ALLOWED_METHODS = "GET,HEAD,PUT,PATCH,POST,DELETE";

@@ -1,3 +1,5 @@
+import { checkResponse, base_url } from './utils';
+
 class Api {
   constructor(options) {
     this._baseUrl = options.baseUrl;
@@ -16,7 +18,7 @@ class Api {
     return fetch(`${this._baseUrl}/cards`, {
       method: "GET",
       headers: this._headers,
-    }).then((res) => this._parseResponse(res));
+    }).then((res) => checkResponse(res));
   }
 
   // Отправка созданных карточек на сервер
@@ -28,7 +30,7 @@ class Api {
         name: data.name,
         link: data.link,
       }),
-    }).then((res) => this._parseResponse(res));
+    }).then((res) => checkResponse(res));
   }
 
   // Удаление карточки
@@ -36,7 +38,7 @@ class Api {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
-    }).then((res) => this._parseResponse(res));
+    }).then((res) => checkResponse(res));
   }
 
   // Получение информации о пользователе с сервера
@@ -44,7 +46,7 @@ class Api {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
       headers: this._headers,
-    }).then((res) => this._parseResponse(res));
+    }).then((res) => checkResponse(res));
   }
 
   // Редактирование информации о пользователе
@@ -56,7 +58,7 @@ class Api {
         name: data.username,
         about: data.job,
       }),
-    }).then((res) => this._parseResponse(res));
+    }).then((res) => checkResponse(res));
   }
 
   // Редактирование аватара пользователя
@@ -67,7 +69,7 @@ class Api {
       body: JSON.stringify({
         avatar: data.avatar,
       }),
-    }).then((res) => this._parseResponse(res));
+    }).then((res) => checkResponse(res));
   }
 
   // Добавить/удалить лайк
@@ -75,14 +77,15 @@ class Api {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: `${!isLiked ? "DELETE" : "PUT"}`,
       headers: this._headers,
-    }).then((res) => this._parseResponse(res));
+    }).then((res) => checkResponse(res));
   }
 }
 
 const api = new Api({
-  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-65",
+  baseUrl: base_url,
   headers: {
-    authorization: "fd37681a-44a9-4fd1-a72b-1b69f417c0ca",
+    // authorization: "fd37681a-44a9-4fd1-a72b-1b69f417c0ca",
+    authorization: `${localStorage.getItem('jwt')}`,
     "Content-Type": "application/json",
   },
 });
