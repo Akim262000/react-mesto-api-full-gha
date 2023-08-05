@@ -2,7 +2,7 @@ import { checkResponse, base_url } from './utils';
 
 const headers = {
   Accept: 'application/json',
-  'Authorization': `${localStorage.getItem('jwt')}`,
+  'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
   'Content-Type': 'application/json',
 };
 
