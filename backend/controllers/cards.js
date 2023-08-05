@@ -8,7 +8,7 @@ const ErrorNotFound = require("../errors/ErrorNotFound");
 //Получение всех карточек из базы данных
 function getCards(_req, res, next) {
   Card.find({})
-    .then((cards) => res.status(ERROR_OK).send(cards))
+    .then((cards) => res.status(ERROR_OK).send(cards.reverse()))
     .catch(next);
 }
 
