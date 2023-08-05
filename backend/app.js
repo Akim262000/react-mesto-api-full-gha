@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const mongoose = require("mongoose");
 const auth = require('./middlewares/auth')
@@ -25,14 +26,14 @@ app.use(express.urlencoded({ extended: true }));
 // подключаем логгер запросов
 app.use(requestLogger);
 
-app.post('/signup', signUp, createUser);
-app.post('/signin', signIn, login);
-
 app.get('/crash-test', () => {
   setTimeout(() => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
 });
+
+app.post('/signup', signUp, createUser);
+app.post('/signin', signIn, login);
 
 app.use(auth);
 

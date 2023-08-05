@@ -6,6 +6,8 @@ const ErrorConflict = require("../errors/ErrorConflict");
 const ErrorBadRequest = require("../errors/ErrorBadRequest");
 const ErrorNotFound = require("../errors/ErrorNotFound");
 
+const { NODE_ENV, JWT_SECRET } = process.env;
+
 const { ERROR_OK, ERROR_CREATE } = require("../utils/utils");
 
 //Получение данных о всех пользователях
@@ -35,7 +37,8 @@ function createUser(req, res, next) {
     throw new ErrorBadRequest(`Неправильный логин или пароль`);
   }
 
-    bcrypt.hash(password, 10)
+  bcrypt
+    .hash(password, 10)
     .then((hash) =>
       User.create({
         email,
@@ -56,7 +59,9 @@ function createUser(req, res, next) {
     )
     .catch((err) => {
       if (err.code === 11000) {
-        return next(new ErrorConflict("Пользователь с таким email уже существует"));
+        return next(
+          new ErrorConflict("Пользователь с таким email уже существует")
+        );
       }
       return next(err);
     });
@@ -70,9 +75,13 @@ function login(req, res, next) {
       if (!user || !password) {
         return next(new ErrorBadRequest("Неверный email или пароль"));
       }
-      const token = jwt.sign({ _id: user._id }, "some-secret-key", {
-        expiresIn: "7d",
-      });
+      const token = jwt.sign(
+        { _id: user._id },
+        NODE_ENV === "production" ? JWT_SECRET : "some-secret-key",
+        {
+          expiresIn: "7d",
+        }
+      );
 
       // вернём токен
       return res.send({ token });
