@@ -164,7 +164,7 @@ function App() {
   const handleRegistration = (data) => {
     return auth
     .register(data)
-    .then((data) => {
+    .then(() => {
       setIsSuccessRegistration(true);
       handleInfoTooltip();
       navigate('/sign-in');
@@ -199,7 +199,7 @@ function App() {
     auth
       .getContent(jwt)
       .then((data) => {
-        setAuthorizationEmail(data.data.email);
+        setAuthorizationEmail(data.email);
         setIsLoggedIn(true);
         navigate('/');
       })
