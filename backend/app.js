@@ -10,11 +10,11 @@ const errorHandler = require("./middlewares/errorHandler");
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const cors = require("./middlewares/cors");
 
-const { PORT, DB_ADDRESS } = process.env;
+const { PORT } = process.env;
 
 const app = express();
 
-mongoose.connect(DB_ADDRESS, {
+mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
   useCreateIndex: true,
   useUnifiedTopology: true,
   useNewUrlParser: true
