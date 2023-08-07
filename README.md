@@ -7,7 +7,7 @@
 
 ## Ссылки на проект
 
-IP-адрес 51.250.17.9
+IP 51.250.17.9
 
 Frontend https://akim.nomoreparties.co
 
