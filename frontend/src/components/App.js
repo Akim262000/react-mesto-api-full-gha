@@ -17,7 +17,6 @@ import * as auth from "../utils/auth";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-  // const [userData, setUserData] = React.useState({});
   const [authorizationEmail, setAuthorizationEmail] = React.useState('');
 
   const navigate = useNavigate();
@@ -205,7 +204,6 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        // setIsLoggedIn(false);
       });
   };
 

@@ -10,11 +10,11 @@ const errorHandler = require("./middlewares/errorHandler");
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const cors = require("./middlewares/cors");
 
-const { PORT = 3000 } = process.env;
+const { PORT, DB_ADDRESS } = process.env;
 
 const app = express();
 
-mongoose.connect("mongodb://127.0.0.1:27017/mestodb", {
+mongoose.connect(DB_ADDRESS, {
   useCreateIndex: true,
   useUnifiedTopology: true,
   useNewUrlParser: true
@@ -22,6 +22,8 @@ mongoose.connect("mongodb://127.0.0.1:27017/mestodb", {
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(cors);
 
 // подключаем логгер запросов
 app.use(requestLogger);
@@ -46,8 +48,6 @@ app.use('/', require('./routes/cards'));
 app.use('*', (req, res, next) => {
   next(new ErrorNotFound('Страница не найдена'));
 });
-
-app.use(cors);
 
 // подключаем логгер ошибок
 app.use(errorLogger);
