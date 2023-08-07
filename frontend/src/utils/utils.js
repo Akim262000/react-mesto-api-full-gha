@@ -1,5 +1,5 @@
 // export const base_url = 'https://api.akim.nomoreparties.co';
-export const base_url = 'http://localhost:3000';
+export const base_url = 'http://localhost:3001';
 
 export const checkResponse = (response) => {
   return response.ok
