@@ -43,7 +43,6 @@ app.use(auth);
 app.use('/', require('./routes/users'));
 app.use('/', require('./routes/cards'));
 
-
 // запрос к несуществующему роуту
 app.use('*', (req, res, next) => {
   next(new ErrorNotFound('Страница не найдена'));
