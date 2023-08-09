@@ -155,7 +155,7 @@ function App() {
       .then((data) => {
         setIsLoggedIn(true);
         localStorage.setItem("jwt", data.token);
-        api.headers['Authorization'] = `Bearer ${data.token}`;
+        api._headers["Authorization"] = `Bearer ${data.token}`;
         checkToken();
         navigate("/");
       })
