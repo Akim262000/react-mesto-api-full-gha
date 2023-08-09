@@ -121,6 +121,7 @@ function App() {
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setIsInfoTooltipOpen(false);
+    setIsSuccessRegistration(false);
     setSelectedCard({});
   };
 
@@ -154,6 +155,7 @@ function App() {
       .then((data) => {
         setIsLoggedIn(true);
         localStorage.setItem("jwt", data.token);
+        api.headers['Authorization'] = `Bearer ${data.token}`;
         checkToken();
         navigate("/");
       })

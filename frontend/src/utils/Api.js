@@ -14,14 +14,11 @@ class Api {
   }
 
   // Получение карточек от сервера
-  getInitialCards(jwt) {
+  getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       method: "GET",
       credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${jwt}`,
-      }
+      headers: this._headers,
     }).then((res) => checkResponse(res));
   }
 
