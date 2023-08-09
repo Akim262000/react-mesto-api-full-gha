@@ -6,6 +6,8 @@
   font-size: 14px;
   line-height: 17px;
   text-align: center;
+  text-decoration: none;
+  color: #fff;
 }
 
 .auth__login-hint:hover {
