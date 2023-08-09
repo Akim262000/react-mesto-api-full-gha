@@ -17,7 +17,7 @@ import * as auth from "../utils/auth";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-  const [authorizationEmail, setAuthorizationEmail] = React.useState('');
+  const [authorizationEmail, setAuthorizationEmail] = React.useState("");
 
   const navigate = useNavigate();
 
@@ -35,35 +35,6 @@ function App() {
     cohort: "",
   });
   const [cards, setCards] = React.useState([]);
-  
-
-  React.useEffect(() => {
-
-    if (isLoggedIn) {
-      api
-      .getInitialCards()
-      .then((data) => {
-        setCards(data);
-      })
-      .catch((err) => {
-        console.log(`Ошибка ${err}`);
-      });
-    }
-   
-  }, [isLoggedIn]);
-
-  React.useEffect(() => {
-    if (isLoggedIn) {
-    api
-      .getUserInfo()
-      .then((data) => {
-        setCurrentUser(data);
-      })
-      .catch((err) => {
-        console.log(`Ошибка ${err}`);
-      });
-    }
-  }, [isLoggedIn]);
 
   const handleEditProfileClick = () => {
     setIsEditProfilePopupOpen(!isEditProfilePopupOpen);
@@ -77,9 +48,9 @@ function App() {
     setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
   };
 
-    const handleInfoTooltip = () => {
+  const handleInfoTooltip = () => {
     setIsInfoTooltipOpen(!isInfoTooltipOpen);
-  }
+  };
 
   const handleCardClick = (card) => {
     setSelectedCard(card);
@@ -153,26 +124,28 @@ function App() {
     setSelectedCard({});
   };
 
-   // Выход 
-   const handleSignOut = () => {
+  // Выход
+  const handleSignOut = () => {
+    localStorage.removeItem("jwt");
     setIsLoggedIn(false);
-    localStorage.removeItem('jwt');
-    navigate('/sign-in');
+    setCurrentUser({});
+    setAuthorizationEmail("");
+    navigate("/sign-in");
   };
 
   const handleRegistration = (data) => {
     return auth
-    .register(data)
-    .then(() => {
-      setIsSuccessRegistration(true);
-      handleInfoTooltip();
-      navigate('/sign-in');
-    })
-    .catch((err) => {
-      console.log(err);
-      setIsSuccessRegistration(false);
-      handleInfoTooltip();
-    });
+      .register(data)
+      .then(() => {
+        setIsSuccessRegistration(true);
+        handleInfoTooltip();
+        navigate("/sign-in");
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsSuccessRegistration(false);
+        handleInfoTooltip();
+      });
   };
 
   const handleAuthorization = (data) => {
@@ -180,9 +153,9 @@ function App() {
       .authorize(data)
       .then((data) => {
         setIsLoggedIn(true);
-        localStorage.setItem('jwt', data.token);
+        localStorage.setItem("jwt", data.token);
         checkToken();
-        navigate('/');
+        navigate("/");
       })
       .catch((err) => {
         console.log(err);
@@ -191,7 +164,7 @@ function App() {
   };
 
   const checkToken = () => {
-    const jwt = localStorage.getItem('jwt');
+    const jwt = localStorage.getItem("jwt");
     if (!jwt) {
       return;
     }
@@ -199,12 +172,19 @@ function App() {
       .getContent(jwt)
       .then((data) => {
         setAuthorizationEmail(data.email);
+        setCurrentUser(data);
         setIsLoggedIn(true);
-        navigate('/');
+        navigate("/");
       })
       .catch((err) => {
         console.log(err);
       });
+    api
+      .getInitialCards(jwt)
+      .then((initialCards) => {
+        setCards(initialCards);
+      })
+      .catch((err) => console.log(err));
   };
 
   React.useEffect(() => {
@@ -213,17 +193,18 @@ function App() {
 
   React.useEffect(() => {
     if (isLoggedIn) {
-      navigate('/');
+      navigate("/");
     }
   }, [isLoggedIn]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-        <Header isLoggedIn={isLoggedIn} userEmail={authorizationEmail} onSignOut={handleSignOut}/>
+        <Header isLoggedIn={isLoggedIn} userEmail={authorizationEmail} onSignOut={handleSignOut} />
         <Routes>
-          <Route path="/"
-            element = {
+          <Route
+            path="/"
+            element={
               <ProtectedRoute
                 // path="/"
                 component={Main}
@@ -235,11 +216,11 @@ function App() {
                 cards={cards}
                 onCardLike={handleCardLike}
                 onCardDelete={handleCardDelete}
-                />
-            }                
               />
+            }
+          />
 
-          <Route path="/sign-in" element={<Login onLogin={handleAuthorization}/>} />
+          <Route path="/sign-in" element={<Login onLogin={handleAuthorization} />} />
           <Route path="/sign-up" element={<Register onRegister={handleRegistration} />} />
           <Route path="*" element={isLoggedIn ? <Navigate to="/" /> : <Navigate to="/sign-in" />} />
         </Routes>
